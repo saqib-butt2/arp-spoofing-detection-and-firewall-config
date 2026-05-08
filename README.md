@@ -129,6 +129,13 @@ Extended ACL applied inbound on FastEthernet0/0 (LAN2 interface):
 | Cisco Packet Tracer | Network simulation and ACL configuration |
 
 ---
+## Evidence
+
+### Cisco ACL configuration
+![cisco acl configuration](screenshots/cisco%20acl%20configuration.png)
+
+---
+
 
 ## Repository Files
 
@@ -140,6 +147,8 @@ Extended ACL applied inbound on FastEthernet0/0 (LAN2 interface):
 | `acl-commands.txt` | ACL commands used on Router1 |
 
 ---
+
+
 
 ## References
 
