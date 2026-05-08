@@ -1,0 +1,65 @@
+# acl-commands.txt
+# ACL configuration commands used on Router1 in Cisco Packet Tracer
+# Module: Computer Networking and Infrastructure | LSBU | Student ID: 4126385
+# Purpose: Block outbound ICMP and FTP from PC3 while allowing all other traffic
+
+# ============================================================
+# STEP 1 — CREATE EXTENDED ACL ON ROUTER1
+# ============================================================
+
+Router1> enable
+Router1# configure terminal
+
+# Create named extended ACL
+Router1(config)# ip access-list extended LAN2_FILTER
+
+# Block outbound ICMP from PC3
+Router1(config-ext-nacl)# deny icmp host 192.168.10.2 any
+
+# Block outbound FTP from PC3
+Router1(config-ext-nacl)# deny tcp host 192.168.10.2 any eq 21
+
+# Allow all other traffic
+Router1(config-ext-nacl)# permit ip any any
+
+Router1(config-ext-nacl)# exit
+
+# ============================================================
+# STEP 2 — APPLY ACL TO INTERFACE
+# ============================================================
+
+# Apply inbound on FastEthernet0/0 (LAN2 facing interface)
+Router1(config)# interface FastEthernet0/0
+Router1(config-if)# ip access-group LAN2_FILTER in
+Router1(config-if)# exit
+
+Router1(config)# exit
+
+# ============================================================
+# STEP 3 — VERIFY ACL CONFIGURATION
+# ============================================================
+
+# Show ACL rules
+Router1# show ip access-lists
+
+# Show interface ACL assignment
+Router1# show ip interface FastEthernet0/0
+
+# ============================================================
+# STEP 4 — TEST RESULTS
+# ============================================================
+
+# From PC3 — outbound ICMP blocked
+# ping 192.168.0.1 -> Request timed out
+
+# From PC0 — inbound ICMP to PC3 allowed
+# ping 192.168.10.2 -> Reply received
+
+# From PC3 — outbound FTP blocked
+# ftp 192.168.0.10 -> Connection failed
+
+# From PC3 — HTTP allowed
+# http://192.168.0.10 -> Page loads successfully
+
+# From PC3 — DNS allowed
+# nslookup -> Response received
